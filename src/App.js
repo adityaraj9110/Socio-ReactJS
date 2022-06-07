@@ -1,12 +1,42 @@
-import React from 'react'
-import Todo from './Todo';
+import React, { useState } from "react";
+import Sidebar from "./components/Sidebar";
+import Rightbar from "./components/Rightbar";
+import Navbar from "./components/Navbar";
+import Feed from "./components/Feed";
+import { Box, Stack } from "@mui/material";
+import Add from "./components/Add";
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 
-const App = () => {
+
+// const lightTheme = createTheme({
+//   palette: {
+//     mode: 'light',
+//   },
+// });
+
+
+
+function App() {
+  const [mode,setMode]=useState('light')
+  const darkTheme = createTheme({
+    palette: {
+      mode: mode,
+    },
+  });
   return (
-    <div>
-      <Todo/>
-    </div>
-  )
+    <ThemeProvider theme={darkTheme}>
+      <Box bgcolor={"background.default"} color={"text.primary"}>
+        <Navbar />
+        <Stack direction="row" spacing={2} justifyContent="space-between">
+          <Sidebar  setMode={setMode} mode={mode} />
+          <Feed />
+          <Rightbar />
+        </Stack>
+        <Add />
+      </Box>
+    </ThemeProvider>
+    
+  );
 }
 
 export default App;
